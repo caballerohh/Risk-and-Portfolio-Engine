@@ -47,19 +47,6 @@ comentario_descripcion = {
 # =========================================================================
 # ✅ ANÁLISIS: COMENTARIOS SOBRE RIESGO (Columna Derecha)
 # =========================================================================
-comentario_descripcion = {
-    "AAPL": "<b>Apple Inc. (AAPL):</b> -",
-    "AMZN": "<b>Amazon Inc. (AMZN):</b> -",
-    "JPM": "<b>JPMorgan Chase & Co. (JPM):</b> -",
-    "GS": "<b>Goldman Sachs Group Inc. (GS):</b> -",
-    "SPY": "<b>SPDR S&P 500 ETF Trust (SPY):</b> -",
-    "DIA": "<b>SPDR Dow Jones Industrial Average ETF Trust (DIA):</b> -",
-    "BND": "<b>Vanguard Total Bond Market ETF (BND):</b> -",
-    "PORTAFOLIO": "<b>Análisis cuantitativo del PORTFOLIO:</b> -"
-}
-
-# =========================================================================
-
 comentario_metricas = {
     "AAPL": "<b>Comentarios sobre AAPL:</b> -",
     "AMZN": "<b>Comentarios sobre AMZN:</b> -",
@@ -98,10 +85,7 @@ def descargar_precios(tickers, start, end):
     return df.dropna(how="all")
 
 def construir_portafolio(df, pesos):
-    """
-    Construye el índice del portafolio, ajustando los pesos si
-    algunos activos aún no tienen datos disponibles al inicio.
-    """
+    
     pesos_arr = np.array(pesos)
 
     # 1. Determinar el primer precio disponible (no-NaN) para cada ticker.
@@ -157,7 +141,7 @@ def calcular_metricas(retornos, benchmark=None):
             "Volatilidad": std_ann,
             "Sharpe": sharpe,
             "Sortino": sortino,
-            "Alpha Jensen": 0.0,  # El Alpha de un índice contra sí mismo es teóricamente cero.
+            "Alpha Jensen": 0.0,
             "VaR 95": VaR95,
             "VaR 99": VaR99,
             "Profit": rend_total,
@@ -243,7 +227,7 @@ def descargar_fundamentales(tickers):
 
 
 # ============================================================
-# FUNCIONES DE GRAFICOS (Se mantienen sin cambios)
+# FUNCIONES DE GRAFICOS
 # ============================================================
 def generar_graficos(nombre, precios, rend, vol_roll, fig_width=PLOT_WIDTH, fig_height=PLOT_HEIGHT):
     fig, axs = plt.subplots(3, 1, figsize=(fig_width, fig_height))
@@ -367,7 +351,7 @@ def crear_encabezado_pie(pdf, num_pagina, total_paginas):
     pdf.drawRightString(ancho - 1.5 * cm, 1 * cm, f"Página {num_pagina} de {total_paginas}")
 
 # ============================================================
-# GENERAR PDF FINAL (FUNCIÓN CORREGIDA Y AJUSTADA) (Se mantiene sin cambios)
+# GENERAR PDF FINAL (FUNCIÓN CORREGIDA Y AJUSTADA)
 # ============================================================
 def generar_pdf():
     # Las fechas ya están definidas globalmente
@@ -605,7 +589,7 @@ def generar_pdf():
 
         tbl_summary = Table(table_summary_data, colWidths=[col_width_1, col_width_2])
         tbl_summary.setStyle(TableStyle([
-            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0B3D91")), # Color verde para distinguir
+            ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0B3D91")),
             ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
             ("SPAN", (0, 0), (1, 0)),
             ("ALIGN", (0, 0), (-1, 0), "CENTER"),

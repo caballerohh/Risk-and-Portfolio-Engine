@@ -143,7 +143,7 @@ def calcular_metricas(retornos, benchmark=None):
 
     neg_ret = retornos[retornos < 0]
     neg_std_ann = neg_ret.std() * np.sqrt(252) if not neg_ret.empty else 0
-    sortino = mean_ann / neg_std_ann if neg_std_ann > 0 else np.nan
+    sortino = (mean_ann - risk_free) / neg_std_ann if neg_std_ann > 0 else np.nan
 
     rend_total = (np.exp(np.log1p(retornos).sum()) - 1) * 100
     VaR95 = np.percentile(retornos, 5) * 100
